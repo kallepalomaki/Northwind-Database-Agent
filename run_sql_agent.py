@@ -150,11 +150,19 @@ agent = initialize_agent(
     verbose=True
 )
 
-# Run the agent with a prompt to find quotes
-#prompt = "Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List each bracket separately."# Käytä yhden tain kahden sanan ilmaisua per tuote. Kokoa tuotteet python listaan. Älä sisällytä vastaukseen mitään muuta kuin lista. Voitko etsiä listan tuotteet minulle koko lista kerrallaan?"
-#prompt= "Please find top 2 companies"
-#prompt="Find the last name name of all the employees and their birth dates."
-prompt=input("query: ")
-result = agent.invoke(prompt)
-print(result["input"])
-print(result["output"])
+
+
+# Three test queries:
+# query = "Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List each bracket separately."
+# query = "Please find top 2 companies"
+# query = "Find the last name name of all the employees and their birth dates."
+
+
+
+while (True):
+    query=input("Please write your query here: ")
+
+    # Run the agent with a query question
+    result = agent.invoke(query)
+    print(result["input"])
+    print(result["output"])

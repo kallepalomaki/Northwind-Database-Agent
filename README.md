@@ -1,9 +1,5 @@
 # Langchain experiments
 
-<img width="1311" alt="kuva" src="https://github.com/user-attachments/assets/340dd057-3c36-4a9d-98fe-737411e6e8fc" />
-
-S-market bot fills automatically a shopping cart by a natural language query.
-
 This project is to make database queries using natural language in a controlled manner by AI agents using python language chain
 and OpenAI api. I have used publicly available Northwind database to demonstrate the approach. 
 
@@ -15,7 +11,7 @@ try template based functions before calling free SQL as follows. Here is the cor
 
 # Dependencies
 
-I'm using python 3.10. for the experiments
+I'm using python 3.11. for the experiments
 
 For Northwind I'm using SQLite3 tools 
 from this repo:
