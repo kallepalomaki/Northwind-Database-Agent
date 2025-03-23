@@ -1,4 +1,4 @@
-# Langchain experiments
+# Northwind-Database-Agent
 
 This project is to make database queries using natural language in a controlled manner by AI agents using python language chain
 and OpenAI api. I have used publicly available Northwind database to demonstrate the approach. 
