@@ -35,17 +35,18 @@ For running the	code, you'll need OpenAI API key.
 After you have installed and configured the agent run it with command:
 python run_sql_agent.py
 
-Agent will prompt:
+Agent will prompt "Please write your query here or quit by 'q':"
+Add your natural language query and press enter. 
 
+I have tested the agent with following test queries.
 
 1) Test SQL template based revenue_range agent by a complex query:
-
 “Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List each bracket separately.”
 
 2) Test SQL template based  n_largest_customers_by_revenue agent.
-
 “Please find top 2 companies”
 
 3) Test free SQL generation agent
-
 “Find the last name of all the employees and their date of birth.”
+
+See the following demovideo (in Finnish): https://www.youtube.com/watch?v=qad31XJLfsU
