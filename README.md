@@ -1,13 +1,10 @@
 # Northwind-Database-Agent
 
-This project is to make database queries using natural language in a controlled manner by AI agents using python language chain
-and OpenAI api. I have used publicly available Northwind database to demonstrate the approach. 
+This project implements an AI agent for controlled natural language database queries using Python's LangChain and the OpenAI API. The approach is demonstrated with the publicly available Northwind database.
 
-Rather letting AI to generate SQL freely I have applied two stage approach. First, I provide query templates for anticipated complex 
-queries for which agent finds only calling parameters. Second, if template based approaches do not answer users
-question, then free query is allowed. The priority of using the template is achieved by instructing the agent to 
-try template based functions before calling free SQL as follows. Here is the corresponding instruction to the agent.
-"Use this as a fallback tool for free-form SQL queries after you have tried other agents multiple times."
+Instead of allowing the AI to generate SQL queries freely, I use a two-stage approach. First, I provide query templates for anticipated complex queries, where the agent only determines the required parameters. Second, if a template-based approach does not answer the user’s question, free-form SQL generation is permitted.
+
+To prioritize template-based queries, the agent is instructed to attempt template-based functions before resorting to free SQL generation. Below is the corresponding instruction given to the agent by following instruction: "Use this as a fallback tool for free-form SQL queries after you have tried other agents multiple times."
 
 
 # Installation
