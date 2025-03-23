@@ -150,14 +150,10 @@ agent = initialize_agent(
     verbose=True
 )
 
-
-
 # Three test queries:
 # query = "Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List each bracket separately."
 # query = "Please find top 2 companies"
-# query = "Find the last name name of all the employees and their birth dates."
-
-
+# query = "Find the last name of all the employees and their date of birth."
 
 while (True):
     query=input("Please write your query here: ")
