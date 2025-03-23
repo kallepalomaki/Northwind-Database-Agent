@@ -131,8 +131,8 @@ class DatabaseTools:
 
 def main():
     parser = argparse.ArgumentParser(description="Northwind database AI agent")
-    parser.add_argument("openai_key_path", type=str, nargs="?", default="../openai.key", help="Path to OpenAI api key.")
-    parser.add_argument("northwind_path", type=str, nargs="?", default="../northwind-SQLite3/dist/northwind.db", help="Path to Northwind database")
+    parser.add_argument("--openai_key_path", type=str, nargs="?", default="../openai.key", help="Path to OpenAI api key.")
+    parser.add_argument("--northwind_path", type=str, nargs="?", default="../northwind-SQLite3/dist/northwind.db", help="Path to Northwind database")
 
     args = parser.parse_args()
     # Connect to (or create) a database file
