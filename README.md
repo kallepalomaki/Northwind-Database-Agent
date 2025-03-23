@@ -10,7 +10,7 @@ try template based functions before calling free SQL as follows. Here is the cor
 "Use this as a fallback tool for free-form SQL queries after you have tried other agents multiple times."
 
 
-# Dependencies
+# Installation
 
 I'm using python 3.11. for the experiments. Install info using a virtual enviroment in Linux or Mac:
 
