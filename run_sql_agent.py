@@ -171,6 +171,7 @@ def main():
     # query = "Find the last name of all the employees and their date of birth."
 
     while (True):
+        print()
         query=input("Please write your query here or quit by 'q': ")
         if query == 'q':
             break
@@ -178,7 +179,8 @@ def main():
             # Run the agent with a query question
             result = agent.invoke(query)
             print(result["input"])
+            print()
             print(result["output"])
-
+            print()
 if __name__ == "__main__":
     main()
