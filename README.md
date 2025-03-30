@@ -37,6 +37,8 @@ I have tested the agent with following test queries.
 
 1) Test of SQL template based revenue_range agent by a complex query:
 “Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List each bracket separately.”
+or
+“Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List names of companies in each bracket separately.”
 
 2) Test of SQL template based n_largest_customers_by_revenue agent:
 “Please find top 2 companies”

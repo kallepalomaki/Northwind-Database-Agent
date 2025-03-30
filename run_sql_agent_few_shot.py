@@ -55,7 +55,7 @@ class DatabaseTools:
             },
             {
                 "input": "Show companies with revenue between 4.5M and 5M",
-                "thought": "I need to generate SELECT SQL query with given schema info for SQLite3. Generate SQL queries as plain text. Do NOT use Markdown formatting or triple backticks.",
+                "thought": "I need to generate SELECT SQL query with given schema info for SQLite3. This is a tested query, follow it very closely. Repeat multiple times, rather than rewrite.",
                 "action": "sql_tool",
                 "action_input": """
                 SELECT 
@@ -100,8 +100,13 @@ class DatabaseTools:
                 func=self.execute_sql_query,  # Single function for all cases
                 description=(
                     "Use this tool to generate and execute SQL queries on the Northwind database. "
-                    "Follow the patterns shown in examples when applicable (e.g., ordering by revenue, filtering by range). "
-                    "If the query is completely new, generate a reasonable SQL query using the database schema below.\n\n"
+                    "Generated SQL must follow the exact structure of provided examples whenever applicable. Any deviations should be justified."
+                    "Do not introduce new logic (e.g., CASE statements, additional aggregations, extra joins) unless explicitly present in the example."                    
+                    "If initial generation deviates from the examples, refine and regenerate until the structure aligns closely."
+                    "When applicable, reuse query fragments from examples verbatim instead of rewriting them."
+                    "You must repeat query multiple times rather than construct a single query, if it helps keeping the query close to examples even if a single query would be more efficient"
+                    "If the query is completely new, generate a reasonable SQL outside these examples."
+                    "Use the database schema below in the query generation.\n\n"
                     f"{schema_info}"
                 ),
             )
