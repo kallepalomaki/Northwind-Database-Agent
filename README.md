@@ -28,7 +28,7 @@ For running the	code, you'll need OpenAI API key.
 # Usage
 
 After you have installed and configured the agent run it with command:
-python run_sql_agent.py
+python run_sql_agent.py or run_sql_agent_few_shot.py for a few shots version where templates are given as examples for LLM rather than realized as methods the DatabaseTools -class.
 
 Agent will prompt "Please write your query here or quit by 'q':"
 Add your natural language query and press enter. 
