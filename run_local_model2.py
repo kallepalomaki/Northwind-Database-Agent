@@ -56,13 +56,10 @@ class LocalModelLLM(BaseChatModel, BaseModel):
         # Running the subprocess with the constructed command
         try:
             result = subprocess.run(command, capture_output=True, text=True, check=True)
-            # Create a Generation object for the model output
-            #generation = Generation(text=result.stdout.strip())
             # Create the message (equivalent to what AI might generate)
             assistant_text=result.stdout.strip().split("Assistant:")[1].split("Observation")[0].strip()
 
             if True:
-                #assistant_text="dummy"
                 message = AIMessage(content=assistant_text)
                 # Create the ChatGeneration object (this represents a single response generation)
                 generation = ChatGeneration(text=assistant_text, generation_info={'finish_reason': 'stop', 'logprobs': None},
@@ -73,7 +70,6 @@ class LocalModelLLM(BaseChatModel, BaseModel):
                     'system_fingerprint': None,
                     'id': 'local-model-id'
                 })
-            #chat_result=load_chat_result('/Users/kpalomak/Northwind-Database-Agent/chat_result_saved.json')
             # Return the output wrapped in an LLMResult object (list of lists of Generation objects)
             return chat_result
         except:
