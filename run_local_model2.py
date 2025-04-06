@@ -8,6 +8,7 @@ from langchain_core.outputs.chat_result import ChatResult, ChatGeneration
 from langchain_core.messages.ai import AIMessage
 from langchain_core.outputs import ChatResult
 import json
+import re
 
 def load_chat_result(filename: str) -> ChatResult:
     """Load ChatResult from a JSON file."""
@@ -45,7 +46,7 @@ class LocalModelLLM(BaseChatModel, BaseModel):
             '-p', prompt,           # The input prompt
             '--threads', '4',       # Number of threads
             '--n-gpu-layers', '0',   # Disabling GPU layers
-            '--n-predict', '50',
+            '--n-predict', '100',
             '-st'
         ]
 
@@ -63,7 +64,6 @@ class LocalModelLLM(BaseChatModel, BaseModel):
             if True:
                 #assistant_text="dummy"
                 message = AIMessage(content=assistant_text)
-                action_input=str(assistant_text.split("Input:")[1].replace(":end","").strip())
                 # Create the ChatGeneration object (this represents a single response generation)
                 generation = ChatGeneration(text=assistant_text, generation_info={'finish_reason': 'stop', 'logprobs': None},
                                             message=message)
@@ -138,6 +138,7 @@ class DatabaseTools:
             return f"Error executing query: {str(e)}"
 
     def n_largest_customers_by_revenue(self, N):
+        N = str(re.findall(r'\d+', N)[0])
         try:
             self.cursor.execute("""
             SELECT 
@@ -187,9 +188,20 @@ class DatabaseTools:
                 name="n_largest_customers_by_revenue",
                 func=self.n_largest_customers_by_revenue,
                 description=(
-                    "Use this to determine the N largest companies by revenue. "
-                    "Provide the N as a string with a single integer in the end of response"
-                    "with tag 'Action Input:' according to an example 'Action Input:2'"
+                    """
+                    Use this to determine the N largest companies by revenue. "
+                    You are a helpful AI agent. Given a question, respond in this format:
+                    
+                    Action:<Action Name>
+                    Action Input:<Input>
+                    
+                    Example:
+                    User: Who are the top 2 customers by revenue?
+                    AI: I need to find the top 2 companies by revenue. To do this, I can use the `n_largest_customers_by_revenue` tool.
+                    
+                    Action:n_largest_customers_by_revenue
+                    Action Input:"2"
+                    """
                 ),
             ),
             Tool(
