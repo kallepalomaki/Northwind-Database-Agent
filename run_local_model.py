@@ -1,25 +1,19 @@
 import subprocess
-from langchain.llms import BaseLLM
 from pydantic import BaseModel
 from langchain.chat_models.base import BaseChatModel
-from langchain.schema import LLMResult, Generation  # This is a placeholder for a wrapped result
-#from langchain.chat_models import ChatGeneration, AIMessage
 from langchain_core.outputs.chat_result import ChatResult, ChatGeneration
 from langchain_core.messages.ai import AIMessage
 from langchain_core.outputs import ChatResult
-import json
 import re
+from langchain.agents import initialize_agent, Tool
+from langchain.agents import AgentType
+import sqlite3
+import os
+import json
+from langchain.tools import Tool
+import argparse
+from SchemaInfo import SchemaInfo
 
-def load_chat_result(filename: str) -> ChatResult:
-    """Load ChatResult from a JSON file."""
-    with open(filename, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    return ChatResult.model_validate(data)
-
-# Example Usage
-chat_result_loaded = load_chat_result("chat_result_saved.json")
-
-#class LocalModelLLM(BaseLLM, BaseModel):
 class LocalModelLLM(BaseChatModel, BaseModel):
     exec_path: str  # Define as a Pydantic field
     model_file: str
@@ -87,17 +81,7 @@ model_file="../models/deepseek/DeepSeek-Coder-V2-Lite-Instruct-IQ4_XS.gguf"
 # Example usage
 local_model = LocalModelLLM(exec_path=model_path, model_file=model_file)
 
-from langchain.agents import initialize_agent, Tool
-from langchain.agents import AgentType
-from langchain_openai import ChatOpenAI
-import sqlite3
-import os
-import json
-from langchain.tools import Tool
-import argparse
-
-
-class DatabaseTools:
+class DatabaseTools(SchemaInfo):
     def __init__(self, cursor):
         self.cursor = cursor
     # Function to get schema information dynamically from the database
@@ -153,6 +137,8 @@ class DatabaseTools:
             print("failed n_largest_customers_by_revenue")
 
     def revenue_range(self, rang: str):
+        rang=re.findall(r".*?}", rang) + [rang.rsplit("}", 1)[-1]] if "}" in rang else [rang]
+        rang=rang[0]
         try:
             print(rang)
             data=json.loads(rang)

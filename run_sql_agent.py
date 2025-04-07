@@ -9,8 +9,6 @@ import argparse
 from SchemaInfo import SchemaInfo
 class DatabaseTools(SchemaInfo):
 
-#    def __init__(self, cursor):
-#        self.cursor = cursor
 
     # Function to execute free SQL query and return results
     def execute_sql_query(self, sql_query):

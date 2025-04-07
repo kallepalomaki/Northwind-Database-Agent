@@ -25,20 +25,32 @@ make report
 
 For running the	code, you'll need OpenAI API key.
 
+For local model you need to install: 
+https://github.com/ggml-org/llama.cpp
+
+and get a local model. I have used DeepSeek-Coder-V2-Lite-Instruct-IQ4_XS.gguf 
+To be able to run it with CPU only with laptop using only 16 Gbytes memory.
+
 # Usage
 
-After you have installed and configured the agent run it with command:
-python run_sql_agent.py or run_sql_agent_few_shot.py for a few shots version where templates are given as examples for LLM rather than realized as methods the DatabaseTools -class.
+After you have installed and configured the agent there are three alternatives to run agent. First two apply priorization by a zeroshot approach.
+1. python run_sql_agent.py 
+2. python run_local_model.py
+
+The third is a few shots version where templates are given as examples for LLM rather than realized as methods the DatabaseTools -class:
+3. python run_sql_agent_few_shot.py 
 
 Agent will prompt "Please write your query here or quit by 'q':"
 Add your natural language query and press enter. 
 
 I have tested the agent with following test queries.
 
-1) Test of SQL template based revenue_range agent by a complex query:
+1) Test of SQL template based revenue_range agent by a complex query for OpenAI models 1 & 3:
 “Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List each bracket separately.”
 or
 “Please find companies with revenue between 4 M and 6 M in brackets of 200 k. List names of companies in each bracket separately.”
+and a simpler test for the local model 2:
+"Find companies with revenue between 5.0M and 5.5M"
 
 2) Test of SQL template based n_largest_customers_by_revenue agent:
 “Please find top 2 companies”
