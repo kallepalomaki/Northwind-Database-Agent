@@ -13,6 +13,7 @@ import json
 from langchain.tools import Tool
 import argparse
 from SchemaInfo import SchemaInfo
+import requests
 
 class LocalModelLLM(BaseChatModel, BaseModel):
     exec_path: str  # Define as a Pydantic field
@@ -20,6 +21,44 @@ class LocalModelLLM(BaseChatModel, BaseModel):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)  # Let Pydantic handle initialization
+
+    def llama_server_generate(self, prompt: str):
+        # see examample below:
+        #"https://medium.com/hydroinformatics/running-llama-locally-with-llama-cpp-a-complete-guide-adb5f7a2e2ec"
+        # Define the API endpoint
+        url = "http://localhost:8000/completion"
+
+        # Define the payload
+        payload = {
+            "model": "DeepSeek-Coder-V2-Lite-Instruct-IQ4_XS.gguf",
+            "prompt": prompt,
+            "temperature": 0.7,
+            "n-predict": 100
+        }
+
+        headers = {"Content-Type": "application/json"}
+        try:
+            response = requests.post(url, json=payload, headers=headers)
+
+            # Check if the request was successful
+            if response.status_code == 200:
+                # Parse the response JSON
+                response_data = response.json()
+
+                # Extract the result from the response
+                choices = response_data.get("choices", [])
+                print(response_data["content"])
+                if choices:
+                    result = choices[0].get("text", "")
+                    print("Response:", result)
+                else:
+                    print("No choices found in the response.")
+            else:
+                print(f"Request failed with status code {response.status_code}: {response.text}")
+            return response_data
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            return "error"
 
     def _generate(self, prompt: str, stop: list = None) -> str:
         # Verify the exec_path is a valid string
@@ -34,24 +73,14 @@ class LocalModelLLM(BaseChatModel, BaseModel):
             raise ValueError(f"Invalid model_file: {self.model_file}")
 
         # Construct the command with the correct parameters
-        command = [
-            self.exec_path,
-            '-m', self.model_file,  # Model file
-            '-p', prompt,           # The input prompt
-            '--threads', '4',       # Number of threads
-            '--n-gpu-layers', '0',   # Disabling GPU layers
-            '--n-predict', '100',
-            '-st'
-        ]
 
-        # Debug: Print out the command
-        print("Running command:", command)
 
         # Running the subprocess with the constructed command
         try:
-            result = subprocess.run(command, capture_output=True, text=True, check=True)
+            result = self.llama_server_generate(prompt)
             # Create the message (equivalent to what AI might generate)
-            assistant_text=result.stdout.strip().split("Assistant:")[1].split("Observation")[0].strip()
+            assistant_text=result["content"].split("Assistant:")[0].split("Observation")[0]
+            #assistant_text=result.stdout.strip().split("Assistant:")[1].split("Observation")[0].strip()
 
             if True:
                 message = AIMessage(content=assistant_text)
