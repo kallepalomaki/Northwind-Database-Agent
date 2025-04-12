@@ -36,6 +36,7 @@ To be able to run it with CPU only with laptop using only 16 Gbytes memory.
 After you have installed and configured the agent there are three alternatives to run agent. First two apply priorization by a zeroshot approach.
 1. python run_sql_agent.py 
 2. python run_local_model.py
+3. python run_local_model_server.py
 
 The third is a few shots version where templates are given as examples for LLM rather than realized as methods the DatabaseTools -class:
 3. python run_sql_agent_few_shot.py 
